@@ -1,12 +1,23 @@
-pipeline {
-    agent any  // Run the pipeline on any available Jenkins agent
+                    pipeline {
+    agent {
+        docker {
+            image 'python:3.9-slim'  // Base image with Python and pip
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock'  // Run as root, mount Docker socket
+        }
+    }
 
     stages {
+        stage('Setup') {  // New stage to install dependencies like docker-compose
+            steps {
+                echo 'Setting up environment...'
+                sh 'apt-get update && apt-get install -y docker.io docker-compose'  // Install Docker and docker-compose
+            }
+        }
+
         stage('Checkout') {
             steps {
                 echo 'Checking out the code...'
-                // Jenkins automatically checks out the code if using SCM
-                // If not using SCM, you can add manual checkout steps here
+                // SCM checkout is automatic if configured in Jenkins job
             }
         }
 
@@ -20,15 +31,14 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Add test commands here, e.g., sh 'pytest' if you have tests
-                sh 'echo "No tests yet, placeholder step"'
+                sh 'echo "No tests yet, placeholder step"'  // Placeholder, replace with real tests later
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 echo 'Building the Docker image...'
-                sh 'docker-compose build'  // Build the Docker image using docker-compose.yml
+                sh 'docker-compose build'  // Build using docker-compose.yml
             }
         }
 
@@ -52,4 +62,4 @@ pipeline {
             echo 'Pipeline failed!'
         }
     }
-}
+}                                                                
