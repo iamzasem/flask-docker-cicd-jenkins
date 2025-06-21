@@ -10,7 +10,7 @@ pipeline {
         stage('Setup') {
             steps {
                 echo 'Setting up environment...'
-                sh 'apt-get update && apt-get install -y docker.io docker-compose'  // Install Docker and docker-compose
+                sh 'apt-get update && apt-get install -y docker.io docker-compose'  // Install Docker and docker-compose 
             }
         }
 
