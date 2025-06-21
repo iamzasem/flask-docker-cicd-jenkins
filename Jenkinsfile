@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:3.9-slim'  // Python image for pip
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket for docker-compose 
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket for docker-compose  
         }
     }
 
